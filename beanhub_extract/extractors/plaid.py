@@ -100,7 +100,7 @@ class PlaidExtractor(ExtractorBase):
         row_count = 0
         for _ in row_count_reader:
             row_count += 1
-        self.input_file.seek(os.SEEK_SET, 0)
+        self.input_file.seek(0)
         reader = csv.DictReader(self.input_file)
         for i, row in enumerate(reader):
             pending = row.pop("pending").lower() == "true"
