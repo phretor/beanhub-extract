@@ -4,8 +4,11 @@ import functools
 import pathlib
 
 import pytest
-from beanhub_extract.data_types import Fingerprint, Transaction
-from beanhub_extract.extractors.citi import CitiCreditCardExtractor, parse_date
+
+from beanhub_extract.data_types import Fingerprint
+from beanhub_extract.data_types import Transaction
+from beanhub_extract.extractors.citi import CitiCreditCardExtractor
+from beanhub_extract.extractors.citi import parse_date
 from beanhub_extract.utils import strip_txn_base_path as strip_txn
 
 

@@ -6,7 +6,8 @@ import os
 import re
 import typing
 
-from ..data_types import Fingerprint, Transaction
+from ..data_types import Fingerprint
+from ..data_types import Transaction
 from .base import ExtractorBase
 
 
