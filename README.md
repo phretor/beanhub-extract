@@ -92,3 +92,15 @@ The `timestamp` should be in iso8601 format.
 #### Bool
 
 The `pending` field should be either `ture` or `false` (case-insensitive)
+
+#### Wealthsimple - `wealthsimple`
+
+To export the Wealthsimple CSV file, please visit and login the [Wealthsimple](https://www.wealthsimple.com) website.
+
+#### Fidelity - `fidelity`
+
+To export the Fidelity CSV file, please visit and login the [Fidelity](https://www.fidelity.com) website.
+
+#### Citi - `citi`
+
+To export the Citi CSV file, please visit and login the [Citi](https://www.citi.com) website.
