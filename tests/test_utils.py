@@ -1,8 +1,10 @@
+import datetime
 import pathlib
 
 import pytest
 
 from beanhub_extract.data_types import Transaction
+from beanhub_extract.utils import parse_date
 from beanhub_extract.utils import strip_base_path
 from beanhub_extract.utils import strip_txn_base_path
 
@@ -37,3 +39,13 @@ def test_strip_txn_base_path(base_path: str, txn: Transaction, expected: Transac
         strip_txn_base_path(pathlib.PurePosixPath(base_path), txn, pure_posix=True)
         == expected
     )
+
+
+@pytest.mark.parametrize(
+    "date_str, expected",
+    [
+        ("2024-05-04", datetime.date(2024, 5, 4)),
+    ],
+)
+def test_parse_date(date_str: str, expected: datetime.date):
+    assert parse_date(date_str) == expected
