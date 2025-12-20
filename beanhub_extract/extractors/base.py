@@ -5,7 +5,7 @@ from ..data_types import Transaction
 
 
 class ExtractorBase:
-    def __init__(self, input_file: typing.TextIO):
+    def __init__(self, input_file: typing.TextIO | typing.BinaryIO):
         self.input_file = input_file
 
     def detect(self) -> bool:
