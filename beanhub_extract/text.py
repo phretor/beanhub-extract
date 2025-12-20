@@ -8,7 +8,7 @@ def as_text(
     input_file: typing.TextIO | typing.BinaryIO,
     newline: str | None = None,
     encoding: str = "utf8",
-) -> typing.ContextManager[typing.TextIO]:
+) -> typing.Generator[io.TextIOBase, None, None]:
     """Wrap the given input file object as a text io object if it's binary, pass through the input file object
     if it's already a text file
 
