@@ -110,6 +110,7 @@ Click the "Download" button, typically located in the upper-right corner, and ch
 ### [Citi](https://www.citi.com) - `citi`
 
 To export the Citi CSV file, please visit and login the [Citi](https://www.citi.com) website.
-Navigate to the "Statements" section where your account statements are listed.
-Select the statement period you wish to download, then click on the "Download" link associated with the selected statement.
-In the download options window, select "Comma Separated Value (CSV)" format and click "Download" to save the file.
+Click on "Accounts" and select the specific account for which you want to export transactions.
+Scroll down to the "Transactions" section, then use the "Filter By" dropdown to select "All" transaction types and set a "Custom Date Range" for the period you want to export.
+Click the "Search" button to display the filtered transactions, then click on the download icon located in the top right corner of the transaction list.
+In the pop-up window, under "Text Formats," select "CSV" and click "Export" to download the file.
