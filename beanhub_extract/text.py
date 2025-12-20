@@ -17,7 +17,7 @@ def as_text(
     :param encoding: the encoding to use when we need to wrap a binary input file
     :return:
     """
-    if isinstance(input_file, typing.TextIO):
+    if isinstance(input_file, io.TextIOBase):
         yield input_file
     else:
         text_file = io.TextIOWrapper(input_file, newline=newline, encoding=encoding)
