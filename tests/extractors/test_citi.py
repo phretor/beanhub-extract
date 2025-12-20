@@ -148,10 +148,9 @@ def test_citi_detect(fixtures_folder: pathlib.Path, input_file: str, expected: b
 
 
 def test_citi_fingerprint(fixtures_folder: pathlib.Path):
-    HASH = "f99f0003cdc10ce36058c12212d7739ae5b035cf8b9d72c685da9cb8e40fef96"
     with open(fixtures_folder / "citi.csv", "rt") as fo:
         extractor = CitiCreditCardExtractor(fo)
         assert extractor.fingerprint() == Fingerprint(
             starting_date=datetime.date(2025, 11, 23),
-            first_row_hash=HASH,
+            first_row_hash="f99f0003cdc10ce36058c12212d7739ae5b035cf8b9d72c685da9cb8e40fef96",
         )
