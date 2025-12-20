@@ -4,7 +4,9 @@ import pathlib
 from decimal import Decimal
 
 import pytest
-from beanhub_extract.data_types import Fingerprint, Transaction
+
+from beanhub_extract.data_types import Fingerprint
+from beanhub_extract.data_types import Transaction
 from beanhub_extract.extractors.fidelity import FidelityExtractor
 from beanhub_extract.utils import strip_txn_base_path
 
@@ -1208,12 +1210,10 @@ def test_init(fixtures_folder: pathlib.Path, input_file: str):
                     assert tr.source_account == "Other-Person-CASH"
 
 
-# @pytest.mark.parametrize(
-#     "input_file",
-#     ["fidelity.csv"],
-# )
-# def test_transactions(fixtures_folder: pathlib.Path, input_file: str):
-#     with open(fixtures_folder / input_file, "rt") as fo:
-#         extractor = FidelityExtractor(fo)
-#         for tr in extractor():
-#             print(tr)
+def test_fingerprint(fixtures_folder: pathlib.Path):
+    with open(fixtures_folder / "fidelity.csv", "rt") as fo:
+        extractor = FidelityExtractor(fo)
+        assert extractor.fingerprint() == Fingerprint(
+            starting_date=datetime.date(2024, 3, 28),
+            first_row_hash="a5a0427ea664703ab16e162ce420986914a545e953ab2216146bba440479c2e5",
+        )
