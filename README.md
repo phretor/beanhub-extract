@@ -96,11 +96,20 @@ The `pending` field should be either `ture` or `false` (case-insensitive)
 ### [Wealthsimple](https://www.wealthsimple.com) - `wealthsimple`
 
 To export the Wealthsimple CSV file, please visit and login the [Wealthsimple](https://www.wealthsimple.com) website.
+Click on your Profile icon located in the top-right corner, then select "Documents" from the dropdown menu.
+Click "Request documents" in the top-right corner and choose "Activities export (CSV)" for transaction history.
+Select the reporting period and the accounts you want to export, then click "Download CSV" to download the file.
 
 ### [Fidelity](https://www.fidelity.com) - `fidelity`
 
 To export the Fidelity CSV file, please visit and login the [Fidelity](https://www.fidelity.com) website.
-Click the "Accounts" button on the left sidebar, then click the "Export" button on the right sidebar of the account you would like to export.
+Select your account from the left panel, then click on "Activity & Orders" followed by "History".
+The default view shows the past 30 days. To customize the period, click on the date range dropdown and select "Custom", then specify the "From Date" and "To Date" and click "Apply".
+Click the "Download" button, typically located in the upper-right corner, and choose the "CSV" format to download the file.
+
 ### [Citi](https://www.citi.com) - `citi`
 
 To export the Citi CSV file, please visit and login the [Citi](https://www.citi.com) website.
+Navigate to the "Statements" section where your account statements are listed.
+Select the statement period you wish to download, then click on the "Download" link associated with the selected statement.
+In the download options window, select "Comma Separated Value (CSV)" format and click "Download" to save the file.
