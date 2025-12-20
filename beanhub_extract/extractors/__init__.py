@@ -1,3 +1,4 @@
+import io
 import os
 import typing
 
@@ -21,7 +22,9 @@ ALL_EXTRACTORS: dict[str, typing.Type[ExtractorBase]] = {
 }
 
 
-def detect_extractor(input_file: typing.TextIO) -> typing.Type[ExtractorBase]:
+def detect_extractor(
+    input_file: typing.TextIO | typing.BinaryIO,
+) -> typing.Type[ExtractorBase]:
     for extractor_cls in ALL_EXTRACTORS.values():
         input_file.seek(os.SEEK_SET)
         if extractor_cls(input_file).detect():

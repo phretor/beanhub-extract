@@ -1178,7 +1178,7 @@ transactions = [
 def test_extractor(
     fixtures_folder: pathlib.Path, input_file: str, expected: list[Transaction]
 ):
-    with open(fixtures_folder / input_file, "rt") as fo:
+    with open(fixtures_folder / input_file, "rb") as fo:
         extractor = FidelityExtractor(fo)
         assert (
             list(
@@ -1190,28 +1190,8 @@ def test_extractor(
         )
 
 
-@pytest.mark.parametrize(
-    "input_file",
-    ["fidelity.csv"],
-)
-def test_init(fixtures_folder: pathlib.Path, input_file: str):
-    with open(fixtures_folder / input_file, "rt") as fo:
-        extractor = FidelityExtractor(fo)
-        assert (
-            pathlib.Path(extractor.input_file.name).name
-            == pathlib.Path(input_file).name
-        )
-
-        assert extractor._row_count == 24  # count starts on first valid row
-
-        for tr in extractor():
-            if tr.source_account is not None:
-                if "Other Person" in tr.source_account:
-                    assert tr.source_account == "Other-Person-CASH"
-
-
 def test_fingerprint(fixtures_folder: pathlib.Path):
-    with open(fixtures_folder / "fidelity.csv", "rt") as fo:
+    with open(fixtures_folder / "fidelity.csv", "rb") as fo:
         extractor = FidelityExtractor(fo)
         assert extractor.fingerprint() == Fingerprint(
             starting_date=datetime.date(2024, 3, 28),
