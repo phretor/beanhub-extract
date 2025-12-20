@@ -93,14 +93,14 @@ The `timestamp` should be in iso8601 format.
 
 The `pending` field should be either `ture` or `false` (case-insensitive)
 
-#### Wealthsimple - `wealthsimple`
+### [Wealthsimple](https://www.wealthsimple.com) - `wealthsimple`
 
 To export the Wealthsimple CSV file, please visit and login the [Wealthsimple](https://www.wealthsimple.com) website.
 
-#### Fidelity - `fidelity`
+### [Fidelity](https://www.fidelity.com) - `fidelity`
 
 To export the Fidelity CSV file, please visit and login the [Fidelity](https://www.fidelity.com) website.
-
-#### Citi - `citi`
+Click the "Accounts" button on the left sidebar, then click the "Export" button on the right sidebar of the account you would like to export.
+### [Citi](https://www.citi.com) - `citi`
 
 To export the Citi CSV file, please visit and login the [Citi](https://www.citi.com) website.
