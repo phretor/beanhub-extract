@@ -11,7 +11,7 @@ from .base import ExtractorBase
 
 
 def beanify_account(name: str) -> str:
-    rst = re.sub(r"[^a-zA-Z0-9-_:]", "", name)
+    rst = re.sub(r"[^a-zA-Z0-9-_: ]", "", name)
     rst = re.sub(r"[ \t\n\r\v\f]", " ", rst)
     rst = re.sub(r"[ ]{2,}", " ", rst)
     rst = rst.replace(" ", "-")
