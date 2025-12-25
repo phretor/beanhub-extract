@@ -20,7 +20,7 @@ def beanify_account(name: str) -> str:
     rst = re.sub(r"[ \t\n\r\v\f]", " ", rst)
     rst = re.sub(r"[ ]{2,}", " ", rst)
     rst = rst.replace(" ", "-")
-    return rst
+    return rst.title()
 
 
 def parse_date(date_str: str) -> datetime.date:
