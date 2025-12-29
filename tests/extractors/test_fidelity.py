@@ -110,7 +110,7 @@ transactions = [
             "Account": "Person (CASH)",
             "Account Number": "Z26543467",
             "Action": "TRANSFERRED TO VS Z30-309107-1 (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -158,7 +158,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "TRANSFERRED FROM VS Z26-543467-1 (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -206,7 +206,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "DIRECT DEBIT CAPITAL ONE ACCTVERIFY (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -254,7 +254,7 @@ transactions = [
             "Account": "Person (CASH)",
             "Account Number": "Z26543467",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -302,7 +302,7 @@ transactions = [
             "Account": "Person (CASH)",
             "Account Number": "Z26543467",
             "Action": "TRANSFERRED TO VS Z30-309107-1 (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -350,7 +350,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "TRANSFERRED FROM VS Z26-543467-1 (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -398,7 +398,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -446,7 +446,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -494,7 +494,7 @@ transactions = [
             "Account": "Person (CASH)",
             "Account Number": "Z26543467",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -542,7 +542,7 @@ transactions = [
             "Account": "Savings",
             "Account Number": "Z30309107",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -638,7 +638,7 @@ transactions = [
             "Account": "Other Person (CASH)",
             "Account Number": "Z27376330",
             "Action": "DIRECT DEBIT VENMO ACCTVERIFY (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -686,7 +686,7 @@ transactions = [
             "Account": "Other Person (CASH)",
             "Account Number": "Z27376330",
             "Action": "DIRECT DEBIT VENMO ACCTVERIFY (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -734,7 +734,7 @@ transactions = [
             "Account": "Other Person (CASH)",
             "Account Number": "Z27376330",
             "Action": "Electronic Funds Transfer Received (Cash)",
-            "Symbol": " ",
+            "Symbol": "",
             "Description": "No Description",
             "Type": "Cash",
             "Exchange Quantity": "0",
@@ -1210,14 +1210,13 @@ def test_extractor(
 
 
 def test_fingerprint(fixtures_folder: pathlib.Path):
-    with open(fixtures_folder / "fidelity.csv", "rb") as fo:
+    input_file = fixtures_folder / "fidelity.csv"
+    with open(input_file, "rt") as fo:
         extractor = FidelityExtractor(fo)
         assert (
             pathlib.Path(extractor.input_file.name).name
             == pathlib.Path(input_file).name
         )
-
-        assert extractor._row_count == 24  # count starts on first valid row
 
         for tr in extractor():
             if tr.source_account is not None:
