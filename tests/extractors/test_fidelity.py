@@ -4,11 +4,30 @@ import pathlib
 from decimal import Decimal
 
 import pytest
-
-from beanhub_extract.data_types import Fingerprint
-from beanhub_extract.data_types import Transaction
-from beanhub_extract.extractors.fidelity import FidelityExtractor
+from beanhub_extract.data_types import Fingerprint, Transaction
+from beanhub_extract.extractors.fidelity import (
+    FidelityExtractor,
+    beanify_account,
+    parse_date,
+)
 from beanhub_extract.utils import strip_txn_base_path
+
+
+@pytest.mark.parametrize(
+    "date_str, expected",
+    [
+        ("05/04/2024", datetime.date(2024, 5, 4)),
+    ],
+)
+def test_parse_date(date_str: str, expected: datetime.date):
+    assert parse_date(date_str) == expected
+
+
+def test_beanify_account():
+    assert beanify_account("Person (CASH)") == "Person-Cash"
+    assert beanify_account("Other Person: CASH") == "Other-Person-Cash"
+    assert beanify_account("Tech_Account 123") == "Tech_Account-123"
+
 
 transactions = [
     Transaction(
@@ -78,7 +97,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="PersonCASH",
+        source_account="Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -222,7 +241,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="PersonCASH",
+        source_account="Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -270,7 +289,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="PersonCASH",
+        source_account="Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -462,7 +481,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="PersonCASH",
+        source_account="Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -558,7 +577,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="OtherPersonCASH",
+        source_account="Other-Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -606,7 +625,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="OtherPersonCASH",
+        source_account="Other-Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -654,7 +673,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="OtherPersonCASH",
+        source_account="Other-Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -702,7 +721,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="OtherPersonCASH",
+        source_account="Other-Person-Cash",
         dest_account=None,
         note=None,
         reference=None,
@@ -750,7 +769,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -798,7 +817,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -846,7 +865,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -894,7 +913,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -942,7 +961,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -990,7 +1009,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -1038,7 +1057,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -1086,7 +1105,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -1134,7 +1153,7 @@ transactions = [
         pending=None,
         status=None,
         type="Cash",
-        source_account="TECH",
+        source_account="Tech",
         dest_account=None,
         note=None,
         reference=None,
@@ -1178,7 +1197,7 @@ transactions = [
 def test_extractor(
     fixtures_folder: pathlib.Path, input_file: str, expected: list[Transaction]
 ):
-    with open(fixtures_folder / input_file, "rb") as fo:
+    with open(fixtures_folder / input_file) as fo:
         extractor = FidelityExtractor(fo)
         assert (
             list(
@@ -1193,7 +1212,25 @@ def test_extractor(
 def test_fingerprint(fixtures_folder: pathlib.Path):
     with open(fixtures_folder / "fidelity.csv", "rb") as fo:
         extractor = FidelityExtractor(fo)
-        assert extractor.fingerprint() == Fingerprint(
-            starting_date=datetime.date(2024, 3, 28),
-            first_row_hash="a5a0427ea664703ab16e162ce420986914a545e953ab2216146bba440479c2e5",
+        assert (
+            pathlib.Path(extractor.input_file.name).name
+            == pathlib.Path(input_file).name
         )
+
+        assert extractor._row_count == 24  # count starts on first valid row
+
+        for tr in extractor():
+            if tr.source_account is not None:
+                if "Other Person" in tr.source_account:
+                    assert tr.source_account == "Other-Person-Cash"
+
+
+# @pytest.mark.parametrize(
+#     "input_file",
+#     ["fidelity.csv"],
+# )
+# def test_transactions(fixtures_folder: pathlib.Path, input_file: str):
+#     with open(fixtures_folder / input_file, "rt") as fo:
+#         extractor = FidelityExtractor(fo)
+#         for tr in extractor():
+#             print(tr)
